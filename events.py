@@ -4,7 +4,7 @@ from config import ALLOWED_ROLE_ID
 from ai import ask_ai
 
 # حالة البوت لكل سيرفر
-enabled_guilds = set()
+from database import is_enabled
 
 
 def setup_events(bot):
