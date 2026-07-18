@@ -1,3 +1,4 @@
+from database import init_database
 import discord
 from discord.ext import commands
 
@@ -49,8 +50,6 @@ async def on_ready():
 setup_events(bot)
 setup_commands(bot)
 
-# ===========================
-# Start
-# ===========================
+init_database()
 
 bot.run(TOKEN)
