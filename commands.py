@@ -43,7 +43,7 @@ def setup_commands(bot):
             )
             return
 
-        enabled_guilds.discard(interaction.guild.id)
+        disable_guild(interaction.guild.id)
 
         await interaction.response.send_message(
             "🛑 تم إيقاف F7 Bot.",
