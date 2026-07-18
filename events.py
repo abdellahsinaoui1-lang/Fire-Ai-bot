@@ -25,8 +25,8 @@ def setup_events(bot):
             return
 
         # التأكد أن البوت مفعل في هذا السيرفر
-        if message.guild.id not in enabled_guilds:
-            return
+       if not is_enabled(message.guild.id):
+    return
 
         # لازم يبدأ بـ F7
         if not message.content.lower().startswith("f7"):
