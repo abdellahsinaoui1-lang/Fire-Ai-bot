@@ -21,7 +21,7 @@ def setup_commands(bot):
             )
             return
 
-        enabled_guilds.add(interaction.guild.id)
+        enable_guild(interaction.guild.id)
 
         await interaction.response.send_message(
             "✅ تم تفعيل F7 Bot.",
