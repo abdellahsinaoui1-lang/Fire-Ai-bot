@@ -2,7 +2,7 @@ import discord
 from discord import app_commands
 
 from config import ALLOWED_ROLE_ID
-from events import enabled_guilds
+from database import enable_guild, disable_guild
 
 
 def setup_commands(bot):
