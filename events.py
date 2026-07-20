@@ -32,7 +32,7 @@ def setup_events(bot):
         enabled = is_enabled(message.guild.id)
         print(f"✅ Enabled: {enabled}")
 
-        if not enabled:
+       # if not enabled:
             print("❌ Bot is disabled in this server")
             return
 
