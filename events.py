@@ -72,7 +72,7 @@ def setup_events(bot):
     bot,
     message,
     command
-                )
+)
 
             except Exception as e:
                 print(e)
