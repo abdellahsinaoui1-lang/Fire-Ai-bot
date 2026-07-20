@@ -33,8 +33,8 @@ def setup_events(bot):
         print(f"✅ Enabled: {enabled}")
 
        # if not enabled:
-            print("❌ Bot is disabled in this server")
-            return
+          #  print("❌ Bot is disabled in this server")
+          #  return
 
         if not message.content.lower().startswith("f7"):
             print("❌ Message doesn't start with F7")
