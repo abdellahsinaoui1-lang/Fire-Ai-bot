@@ -92,17 +92,18 @@ def parse_command(prompt: str, server_info: str):
         temperature=0
     )
 
-    text = response.choices[0].message.content.strip()
+text = response.choices[0].message.content.strip()
 
-    try:
-text = text.replace("```json", "")
-text = text.replace("```", "")
-text = text.strip()
-        return json.loads(text)
+try:
+    text = text.replace("```json", "")
+    text = text.replace("```", "")
+    text = text.strip()
 
-    except Exception:
-        return {
-            "NoSkill0": {
-                "Reply": text
-            }
+    return json.loads(text)
+
+except Exception:
+    return {
+        "NoSkill0": {
+            "Reply": text
         }
+    }
