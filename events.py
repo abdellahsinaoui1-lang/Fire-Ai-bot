@@ -32,9 +32,9 @@ def setup_events(bot):
         enabled = is_enabled(message.guild.id)
         print(f"✅ Enabled: {enabled}")
 
-       # if not enabled:
-          #  print("❌ Bot is disabled in this server")
-          #  return
+        # if not enabled:
+        #     print("❌ Bot is disabled in this server")
+        #     return
 
         if not message.content.lower().startswith("f7"):
             print("❌ Message doesn't start with F7")
@@ -65,12 +65,11 @@ def setup_events(bot):
 
                 server_info = ""
 
-    command = parse_command(
-    prompt,
-    server_info
-)
+                command = parse_command(
+                    prompt,
+                    server_info
+                )
 
-print(command)
                 print("📦 Parsed Command:", command)
 
                 if "NoSkill0" in command:
