@@ -19,12 +19,12 @@ def setup_events(bot):
 
         print(f"📩 Received: {message.content}")
 
+        # تجاهل رسائل البوتات
         if message.author.bot:
-            print("❌ Message from bot")
             return
 
+        # تجاهل الرسائل الخاصة
         if message.guild is None:
-            print("❌ Private Message")
             return
 
         print(f"✅ Guild ID: {message.guild.id}")
@@ -32,14 +32,15 @@ def setup_events(bot):
         enabled = is_enabled(message.guild.id)
         print(f"✅ Enabled: {enabled}")
 
-        # if not enabled:
-        #     print("❌ Bot is disabled in this server")
-        #     return
-
-        if not message.content.lower().startswith("f7"):
-            print("❌ Message doesn't start with F7")
+        # إذا كان البوت غير مفعل
+        if not enabled:
             return
 
+        # يجب أن تبدأ الرسالة بـ F7
+        if not message.content.lower().startswith("f7"):
+            return
+
+        # التحقق من الرتبة
         has_role = any(
             role.id == ALLOWED_ROLE_ID
             for role in message.author.roles
@@ -48,9 +49,9 @@ def setup_events(bot):
         print(f"✅ Has Role: {has_role}")
 
         if not has_role:
-            print("❌ User doesn't have the required role")
             return
 
+        # إزالة F7 من بداية الرسالة
         prompt = message.content[2:].strip()
 
         if prompt == "":
@@ -63,6 +64,7 @@ def setup_events(bot):
 
             try:
 
+                # سنستخدمها لاحقًا لإعطاء الـ AI معلومات عن السيرفر
                 server_info = ""
 
                 command = parse_command(
@@ -72,6 +74,7 @@ def setup_events(bot):
 
                 print("📦 Parsed Command:", command)
 
+                # إذا لم يكن أمر Discord
                 if "NoSkill0" in command:
 
                     response = chat(
@@ -82,6 +85,7 @@ def setup_events(bot):
                     await message.reply(response)
                     return
 
+                # تنفيذ أوامر Discord
                 await execute_command(
                     bot,
                     message,
@@ -89,7 +93,9 @@ def setup_events(bot):
                 )
 
             except Exception as e:
+
                 print("❌ ERROR:", e)
+
                 await message.reply(
                     "حدث خطأ أثناء معالجة الطلب."
                 )
