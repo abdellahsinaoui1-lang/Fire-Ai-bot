@@ -22,14 +22,23 @@ PARSER_PROMPT = """
     }
 }
 
-الأوامر المدعومة حالياً:
+الأوامر المدعومة:
 
-- CreateChannel
-- DeleteChannel
-- EditChannelName
-- CreateRole
-- GrantRole
-- CreateCategory
+CreateChannel
+DeleteChannel
+EditChannelName
+CreateCategory
+DeleteCategory
+CreateRole
+DeleteRole
+GrantRole
+RemoveRole
+BanMember
+KickMember
+TimeoutMember
+SendMessage
+PurgeMessages
+ChangeNickname
 
 أمثلة:
 
