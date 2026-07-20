@@ -2,10 +2,10 @@ import discord
 
 from config import ALLOWED_ROLE_ID
 from database import is_enabled
-from executor import execute_command
 
 from ai import chat
 from parser import parse_command
+from executor import execute_command
 
 
 def setup_events(bot):
@@ -47,35 +47,35 @@ def setup_events(bot):
 
         async with message.channel.typing():
 
-        try:
+            try:
 
-            server_info = ""
+                server_info = ""
 
-            command = parse_command(
-                prompt,
-                server_info
-            )
-
-            if "NoSkill0" in command:
-
-                response = chat(
+                command = parse_command(
                     prompt,
-                    message.guild
+                    server_info
                 )
 
-                await message.reply(response)
-                return
+                if "NoSkill0" in command:
 
-            await execute_command(
-                bot,
-                message,
-                command
-            )
+                    response = chat(
+                        prompt,
+                        message.guild
+                    )
 
-        except Exception as e:
-            print(e)
-            await message.reply(
-                "حدث خطأ أثناء معالجة الطلب."
-            )
+                    await message.reply(response)
+                    return
+
+                await execute_command(
+                    bot,
+                    message,
+                    command
+                )
+
+            except Exception as e:
+                print(e)
+                await message.reply(
+                    "حدث خطأ أثناء معالجة الطلب."
+                )
 
         await bot.process_commands(message)
