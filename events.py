@@ -65,11 +65,12 @@ def setup_events(bot):
 
                 server_info = ""
 
-                command = parse_command(
-                    prompt,
-                    server_info
-                )
+    command = parse_command(
+    prompt,
+    server_info
+)
 
+print(command)
                 print("📦 Parsed Command:", command)
 
                 if "NoSkill0" in command:
