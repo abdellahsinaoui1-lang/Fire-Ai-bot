@@ -68,9 +68,11 @@ def setup_events(bot):
                     await message.reply(response)
                     return
 
-                # سنضيف التنفيذ الحقيقي في executor.py
-                await message.reply(
-                    f"🛠️ تم فهم الأمر.\n```json\n{command}\n```"
+              await execute_command(
+    bot,
+    message,
+    command
+)
                 )
 
             except Exception as e:
