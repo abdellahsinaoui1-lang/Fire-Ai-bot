@@ -95,6 +95,9 @@ def parse_command(prompt: str, server_info: str):
     text = response.choices[0].message.content.strip()
 
     try:
+text = text.replace("```json", "")
+text = text.replace("```", "")
+text = text.strip()
         return json.loads(text)
 
     except Exception:
