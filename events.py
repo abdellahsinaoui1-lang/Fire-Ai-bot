@@ -1,8 +1,10 @@
 import discord
 
 from config import ALLOWED_ROLE_ID
-from ai import ask_ai
 from database import is_enabled
+
+from ai import chat
+from parser import parse_command
 
 
 def setup_events(bot):
@@ -14,29 +16,26 @@ def setup_events(bot):
     @bot.event
     async def on_message(message: discord.Message):
 
-        # تجاهل رسائل البوتات
         if message.author.bot:
             return
 
-        # لازم يكون داخل سيرفر
         if message.guild is None:
             return
 
-        # التأكد أن البوت مفعل في هذا السيرفر
         if not is_enabled(message.guild.id):
             return
 
-        # لازم يبدأ بـ F7
         if not message.content.lower().startswith("f7"):
             return
 
-        # التأكد من الرتبة
-        has_role = any(role.id == ALLOWED_ROLE_ID for role in message.author.roles)
+        has_role = any(
+            role.id == ALLOWED_ROLE_ID
+            for role in message.author.roles
+        )
 
         if not has_role:
             return
 
-        # حذف كلمة F7
         prompt = message.content[2:].strip()
 
         if prompt == "":
@@ -46,12 +45,37 @@ def setup_events(bot):
         print(f"[{message.guild.name}] {message.author} -> {prompt}")
 
         async with message.channel.typing():
+
             try:
-                response = ask_ai(prompt, message.guild)
-                await message.reply(response)
+
+                # سيتم استخدام هذه المعلومات لاحقًا
+                server_info = ""
+
+                command = parse_command(
+                    prompt,
+                    server_info
+                )
+
+                # إذا لم يكن أمر Discord
+                if "NoSkill0" in command:
+
+                    response = chat(
+                        prompt,
+                        message.guild
+                    )
+
+                    await message.reply(response)
+                    return
+
+                # سنضيف التنفيذ الحقيقي في executor.py
+                await message.reply(
+                    f"🛠️ تم فهم الأمر.\n```json\n{command}\n```"
+                )
 
             except Exception as e:
                 print(e)
-                await message.reply("حدث خطأ أثناء التواصل مع الذكاء الاصطناعي.")
+                await message.reply(
+                    "حدث خطأ أثناء معالجة الطلب."
+                )
 
         await bot.process_commands(message)
