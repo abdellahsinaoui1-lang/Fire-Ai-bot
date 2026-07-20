@@ -13,6 +13,7 @@ PARSER_PROMPT = """
 لا تكتب Markdown.
 
 لا تكتب ```json
+
 القواعد:
 
 - أرجع JSON صالح فقط.
@@ -54,10 +55,10 @@ ChangeNickname
 ↓
 
 {
-    "CreateChannel0":{
-        "Name":"chat",
-        "Type":"text",
-        "Category":null
+    "CreateChannel0": {
+        "Name": "chat",
+        "Type": "text",
+        "Category": null
     }
 }
 
@@ -66,10 +67,10 @@ ChangeNickname
 ↓
 
 {
-    "CreateChannel0":{
-        "Name":"Music",
-        "Type":"voice",
-        "Category":null
+    "CreateChannel0": {
+        "Name": "Music",
+        "Type": "voice",
+        "Category": null
     }
 }
 """
@@ -92,18 +93,18 @@ def parse_command(prompt: str, server_info: str):
         temperature=0
     )
 
-text = response.choices[0].message.content.strip()
+    text = response.choices[0].message.content.strip()
 
-try:
-    text = text.replace("```json", "")
-    text = text.replace("```", "")
-    text = text.strip()
+    try:
+        text = text.replace("```json", "")
+        text = text.replace("```", "")
+        text = text.strip()
 
-    return json.loads(text)
+        return json.loads(text)
 
-except Exception:
-    return {
-        "NoSkill0": {
-            "Reply": text
+    except Exception:
+        return {
+            "NoSkill0": {
+                "Reply": text
+            }
         }
-    }
