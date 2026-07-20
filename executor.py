@@ -84,7 +84,7 @@ async def execute_command(bot, message: discord.Message, command: dict):
             "black": discord.Color.dark_gray(),
             "white": discord.Color.light_gray(),
 
-            "أحمر": discord.Color.red(),
+            "احمر": discord.Color.red(),
             "ازرق": discord.Color.blue(),
             "أزرق": discord.Color.blue(),
             "اخضر": discord.Color.green(),
