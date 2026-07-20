@@ -17,16 +17,27 @@ def setup_events(bot):
     @bot.event
     async def on_message(message: discord.Message):
 
+        print(f"📩 Received: {message.content}")
+
         if message.author.bot:
+            print("❌ Message from bot")
             return
 
         if message.guild is None:
+            print("❌ Private Message")
             return
 
-        if not is_enabled(message.guild.id):
+        print(f"✅ Guild ID: {message.guild.id}")
+
+        enabled = is_enabled(message.guild.id)
+        print(f"✅ Enabled: {enabled}")
+
+        if not enabled:
+            print("❌ Bot is disabled in this server")
             return
 
         if not message.content.lower().startswith("f7"):
+            print("❌ Message doesn't start with F7")
             return
 
         has_role = any(
@@ -34,7 +45,10 @@ def setup_events(bot):
             for role in message.author.roles
         )
 
+        print(f"✅ Has Role: {has_role}")
+
         if not has_role:
+            print("❌ User doesn't have the required role")
             return
 
         prompt = message.content[2:].strip()
@@ -43,7 +57,7 @@ def setup_events(bot):
             await message.reply("اكتب طلبك بعد F7.")
             return
 
-        print(f"[{message.guild.name}] {message.author} -> {prompt}")
+        print(f"🧠 Prompt: {prompt}")
 
         async with message.channel.typing():
 
@@ -55,6 +69,8 @@ def setup_events(bot):
                     prompt,
                     server_info
                 )
+
+                print("📦 Parsed Command:", command)
 
                 if "NoSkill0" in command:
 
@@ -73,7 +89,7 @@ def setup_events(bot):
                 )
 
             except Exception as e:
-                print(e)
+                print("❌ ERROR:", e)
                 await message.reply(
                     "حدث خطأ أثناء معالجة الطلب."
                 )
