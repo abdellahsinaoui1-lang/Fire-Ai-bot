@@ -47,37 +47,33 @@ def setup_events(bot):
 
         async with message.channel.typing():
 
-            try:
+       try:
 
-                # سيتم استخدام هذه المعلومات لاحقًا
-                server_info = ""
+    server_info = ""
 
-                command = parse_command(
-                    prompt,
-                    server_info
-                )
+    command = parse_command(
+        prompt,
+        server_info
+    )
 
-                # إذا لم يكن أمر Discord
-                if "NoSkill0" in command:
+    if "NoSkill0" in command:
 
-                    response = chat(
-                        prompt,
-                        message.guild
-                    )
+        response = chat(
+            prompt,
+            message.guild
+        )
 
-                    await message.reply(response)
-                    return
+        await message.reply(response)
+        return
 
-              await execute_command(
-    bot,
-    message,
-    command
-)
+    await execute_command(
+        bot,
+        message,
+        command
+    )
 
-            except Exception as e:
-                print(e)
-                await message.reply(
-                    "حدث خطأ أثناء معالجة الطلب."
-                )
+except Exception as e:
+    print(e)
+    await message.reply("حدث خطأ أثناء معالجة الطلب.")
 
         await bot.process_commands(message)
