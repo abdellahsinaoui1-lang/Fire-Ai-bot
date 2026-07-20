@@ -6,31 +6,32 @@ from ai import client, MODEL
 PARSER_PROMPT = """
 أنت محلل أوامر لـ F7 Bot.
 
-مهمتك هي تحويل كلام المستخدم إلى JSON فقط.
+حول كلام المستخدم إلى JSON فقط.
+
+لا تكتب أي شرح.
+
+لا تكتب Markdown.
+
+لا تكتب ```json
 
 القواعد:
 
 - أرجع JSON صالح فقط.
-- لا تكتب أي شرح.
-- لا تستخدم Markdown.
-- لا تستخدم ```json.
-- إذا لم تعرف الطلب استخدم NoSkill0.
+- إذا لم يوجد أمر مناسب استخدم NoSkill0.
+- يمكن أن يكون هناك أكثر من أمر في نفس الرسالة.
+- استخدم المفاتيح:
+CreateChannel0
+CreateRole0
+DeleteRole0
+GrantRole0
+...
 
-إذا لم يستطع البوت تنفيذ الطلب أرجع:
-
-{
-    "NoSkill0":{
-        "Reply":"لا أستطيع تنفيذ هذا الطلب."
-    }
-}
-
-==========================
-المهارات المدعومة
-==========================
+=========================
+الأوامر المدعومة
+=========================
 
 CreateChannel
 DeleteChannel
-EditChannelName
 
 CreateCategory
 DeleteCategory
@@ -48,15 +49,11 @@ TimeoutMember
 SendMessage
 PurgeMessages
 
-ChangeNickname
-
-==========================
+=========================
 أمثلة
-==========================
+=========================
 
 اعمل روم اسمه chat
-
-↓
 
 {
     "CreateChannel0":{
@@ -68,8 +65,6 @@ ChangeNickname
 
 اعمل روم صوتي اسمه Music
 
-↓
-
 {
     "CreateChannel0":{
         "Name":"Music",
@@ -80,17 +75,21 @@ ChangeNickname
 
 اعمل كاتيجوري اسمها الإدارة
 
-↓
-
 {
     "CreateCategory0":{
         "Name":"الإدارة"
     }
 }
 
-اعمل رتبة اسمها Staff
+احذف كاتيجوري الإدارة
 
-↓
+{
+    "DeleteCategory0":{
+        "Name":"الإدارة"
+    }
+}
+
+اعمل رتبة اسمها Staff
 
 {
     "CreateRole0":{
@@ -102,8 +101,6 @@ ChangeNickname
 
 اعمل رتبة اسمها Staff لونها أحمر
 
-↓
-
 {
     "CreateRole0":{
         "Name":"Staff",
@@ -112,32 +109,59 @@ ChangeNickname
     }
 }
 
-اعمل رتبة اسمها Staff لونها أحمر وتقدر تحذف الرسائل وتطرد الأعضاء
-
-↓
+اعمل رتبة اسمها Moderator لونها أزرق وصلاحياتها إدارة الرومات وحذف الرسائل وباند
 
 {
     "CreateRole0":{
-        "Name":"Staff",
-        "Color":"احمر",
+        "Name":"Moderator",
+        "Color":"ازرق",
         "Permissions":[
+            "manage_channels",
             "manage_messages",
-            "kick_members"
+            "ban_members"
         ]
     }
 }
 
-اعمل رتبة اسمها Owner بكل الصلاحيات
-
-↓
+احذف رتبة Staff
 
 {
-    "CreateRole0":{
-        "Name":"Owner",
-        "Color":null,
-        "Permissions":[
-            "administrator"
-        ]
+    "DeleteRole0":{
+        "Name":"Staff"
+    }
+}
+
+اعط أحمد رتبة Staff
+
+{
+    "GrantRole0":{
+        "Member":"Ahmed",
+        "Role":"Staff"
+    }
+}
+
+شيل رتبة Staff من أحمد
+
+{
+    "RemoveRole0":{
+        "Member":"Ahmed",
+        "Role":"Staff"
+    }
+}
+
+احذف روم chat
+
+{
+    "DeleteChannel0":{
+        "Name":"chat"
+    }
+}
+
+إذا لم تستطع تنفيذ الطلب:
+
+{
+    "NoSkill0":{
+        "Reply":"لا أستطيع تنفيذ هذا الطلب."
     }
 }
 """
@@ -150,7 +174,9 @@ def parse_command(prompt: str, server_info: str):
         messages=[
             {
                 "role": "system",
-                "content": PARSER_PROMPT + "\n\nServer Information:\n" + server_info
+                "content": PARSER_PROMPT
+                + "\n\nServer Information:\n"
+                + server_info
             },
             {
                 "role": "user",
