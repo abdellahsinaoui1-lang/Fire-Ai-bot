@@ -2,6 +2,7 @@ import discord
 
 from config import ALLOWED_ROLE_ID
 from database import is_enabled
+from executor import execute_command
 
 from ai import chat
 from parser import parse_command
