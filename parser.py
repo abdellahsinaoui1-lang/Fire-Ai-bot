@@ -1,6 +1,6 @@
 import json
 
-from ai import client, MODEL, SYSTEM_PROMPT
+from ai import client, MODEL
 
 
 PARSER_PROMPT = """
