@@ -21,13 +21,15 @@ PARSER_PROMPT = """
 - أرجع JSON صالح فقط.
 - يمكن أن يكون هناك أكثر من أمر.
 - إذا لم تعرف الأمر استخدم NoSkill0.
+- لا تكتب أي نص خارج JSON.
 
 =========================
-الأوامر
+الأوامر المدعومة
 =========================
 
 CreateChannel
 DeleteChannel
+EditChannelName
 
 CreateCategory
 DeleteCategory
@@ -70,7 +72,32 @@ Create Channel
 }
 
 =========================
-Category
+Delete Channel
+=========================
+
+احذف روم chat
+
+{
+    "DeleteChannel0":{
+        "Name":"chat"
+    }
+}
+
+=========================
+Rename Channel
+=========================
+
+غير اسم روم chat إلى general
+
+{
+    "EditChannelName0":{
+        "OldName":"chat",
+        "NewName":"general"
+    }
+}
+
+=========================
+Categories
 =========================
 
 اعمل كاتيجوري اسمها الإدارة
@@ -135,58 +162,40 @@ Roles
     }
 }
 
-=========================
-Grant Role
-=========================
-
-اعط أحمد رتبة Staff
+اعط عبدالله رتبة Staff
 
 {
     "GrantRole0":{
-        "Member":"Ahmed",
+        "Member":"Abdullah",
         "Role":"Staff"
     }
 }
 
-شيل رتبة Staff من أحمد
+شيل رتبة Staff من عبدالله
 
 {
     "RemoveRole0":{
-        "Member":"Ahmed",
+        "Member":"Abdullah",
         "Role":"Staff"
     }
-}
-
-=========================
-Delete Channel
-=========================
-
-احذف روم chat
-
-{
-    "DeleteChannel0":{
-        "Name":"chat"
-    }
-}
-
-=========================
+}=========================
 Ban
 =========================
 
-احظر أحمد
+احظر عبدالله
 
 {
     "BanMember0":{
-        "Member":"Ahmed",
+        "Member":"Abdullah",
         "Reason":"No reason"
     }
 }
 
-احظر أحمد لأنه يسب
+احظر عبدالله لأنه يسب
 
 {
     "BanMember0":{
-        "Member":"Ahmed",
+        "Member":"Abdullah",
         "Reason":"يسب"
     }
 }
@@ -195,11 +204,11 @@ Ban
 Kick
 =========================
 
-اطرد أحمد
+اطرد عبدالله
 
 {
     "KickMember0":{
-        "Member":"Ahmed",
+        "Member":"Abdullah",
         "Reason":"No reason"
     }
 }
@@ -208,21 +217,63 @@ Kick
 Timeout
 =========================
 
-اكتم أحمد 15 دقيقة
+اكتم عبدالله 15 دقيقة
 
 {
     "TimeoutMember0":{
-        "Member":"Ahmed",
+        "Member":"Abdullah",
         "Minutes":15
     }
 }
 
-اكتم أحمد ساعة
+اكتم عبدالله ساعة
 
 {
     "TimeoutMember0":{
-        "Member":"Ahmed",
+        "Member":"Abdullah",
         "Minutes":60
+    }
+}
+
+=========================
+Purge
+=========================
+
+امسح آخر 20 رسالة
+
+{
+    "PurgeMessages0":{
+        "Amount":20
+    }
+}
+
+امسح آخر 100 رسالة
+
+{
+    "PurgeMessages0":{
+        "Amount":100
+    }
+}
+
+=========================
+Send Message
+=========================
+
+ارسل "مرحبا بالجميع" في روم announcements
+
+{
+    "SendMessage0":{
+        "Channel":"announcements",
+        "Message":"مرحبا بالجميع"
+    }
+}
+
+ارسل "القوانين الجديدة" في روم rules
+
+{
+    "SendMessage0":{
+        "Channel":"rules",
+        "Message":"القوانين الجديدة"
     }
 }
 
