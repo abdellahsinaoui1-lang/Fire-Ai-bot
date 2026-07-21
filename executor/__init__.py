@@ -6,6 +6,10 @@ from .delete_channel import delete_channel
 from .delete_category import delete_category
 from .delete_role import delete_role
 
+from .lock_channel import lock_channel
+from .unlock_channel import unlock_channel
+from .slowmode import slowmode
+
 from .grant_role import grant_role
 from .remove_role import remove_role
 
@@ -72,6 +76,34 @@ async def execute_command(bot, message, command):
         elif key.startswith("DeleteRole"):
 
             await delete_role(
+                message.guild,
+                message,
+                data
+            )
+
+        # ===========================
+        # Channel Settings
+        # ===========================
+
+        elif key.startswith("LockChannel"):
+
+            await lock_channel(
+                message.guild,
+                message,
+                data
+            )
+
+        elif key.startswith("UnlockChannel"):
+
+            await unlock_channel(
+                message.guild,
+                message,
+                data
+            )
+
+        elif key.startswith("Slowmode"):
+
+            await slowmode(
                 message.guild,
                 message,
                 data
