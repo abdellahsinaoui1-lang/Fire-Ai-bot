@@ -8,26 +8,22 @@ PARSER_PROMPT = """
 
 حول كلام المستخدم إلى JSON فقط.
 
-لا تكتب أي شرح.
+ممنوع كتابة أي شرح.
 
-لا تكتب Markdown.
+ممنوع Markdown.
 
-لا تكتب ```json
-
-القواعد:
-
-- أرجع JSON صالح فقط.
-- إذا لم يوجد أمر مناسب استخدم NoSkill0.
-- يمكن أن يكون هناك أكثر من أمر في نفس الرسالة.
-- استخدم المفاتيح:
-CreateChannel0
-CreateRole0
-DeleteRole0
-GrantRole0
-...
+ممنوع ```json.
 
 =========================
-الأوامر المدعومة
+القواعد
+=========================
+
+- أرجع JSON صالح فقط.
+- يمكن أن يكون هناك أكثر من أمر.
+- إذا لم تعرف الأمر استخدم NoSkill0.
+
+=========================
+الأوامر
 =========================
 
 CreateChannel
@@ -50,7 +46,7 @@ SendMessage
 PurgeMessages
 
 =========================
-أمثلة
+Create Channel
 =========================
 
 اعمل روم اسمه chat
@@ -73,6 +69,10 @@ PurgeMessages
     }
 }
 
+=========================
+Category
+=========================
+
 اعمل كاتيجوري اسمها الإدارة
 
 {
@@ -88,6 +88,10 @@ PurgeMessages
         "Name":"الإدارة"
     }
 }
+
+=========================
+Roles
+=========================
 
 اعمل رتبة اسمها Staff
 
@@ -131,6 +135,10 @@ PurgeMessages
     }
 }
 
+=========================
+Grant Role
+=========================
+
 اعط أحمد رتبة Staff
 
 {
@@ -149,6 +157,10 @@ PurgeMessages
     }
 }
 
+=========================
+Delete Channel
+=========================
+
 احذف روم chat
 
 {
@@ -156,6 +168,67 @@ PurgeMessages
         "Name":"chat"
     }
 }
+
+=========================
+Ban
+=========================
+
+احظر أحمد
+
+{
+    "BanMember0":{
+        "Member":"Ahmed",
+        "Reason":"No reason"
+    }
+}
+
+احظر أحمد لأنه يسب
+
+{
+    "BanMember0":{
+        "Member":"Ahmed",
+        "Reason":"يسب"
+    }
+}
+
+=========================
+Kick
+=========================
+
+اطرد أحمد
+
+{
+    "KickMember0":{
+        "Member":"Ahmed",
+        "Reason":"No reason"
+    }
+}
+
+=========================
+Timeout
+=========================
+
+اكتم أحمد 15 دقيقة
+
+{
+    "TimeoutMember0":{
+        "Member":"Ahmed",
+        "Minutes":15
+    }
+}
+
+اكتم أحمد ساعة
+
+{
+    "TimeoutMember0":{
+        "Member":"Ahmed",
+        "Minutes":60
+    }
+}
+
+=========================
+No Skill
+=========================
 
 إذا لم تستطع تنفيذ الطلب:
 
@@ -174,9 +247,9 @@ def parse_command(prompt: str, server_info: str):
         messages=[
             {
                 "role": "system",
-                "content": PARSER_PROMPT
-                + "\n\nServer Information:\n"
-                + server_info
+                "content": PARSER_PROMPT +
+                "\n\nServer Information:\n" +
+                server_info
             },
             {
                 "role": "user",
