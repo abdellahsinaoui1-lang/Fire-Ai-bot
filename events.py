@@ -33,8 +33,8 @@ def setup_events(bot):
         print(f"✅ Enabled: {enabled}")
 
         # إذا كان البوت غير مفعل
-        if not enabled:
-            return
+       # if not enabled:
+           # return
 
         # يجب أن تبدأ الرسالة بـ F7
         if not message.content.lower().startswith("f7"):
