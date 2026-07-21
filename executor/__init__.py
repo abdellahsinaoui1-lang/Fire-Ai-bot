@@ -9,6 +9,10 @@ from .delete_role import delete_role
 from .grant_role import grant_role
 from .remove_role import remove_role
 
+from .ban import ban_member
+from .kick import kick_member
+from .timeout import timeout_member
+
 
 async def execute_command(bot, message, command):
 
@@ -19,36 +23,93 @@ async def execute_command(bot, message, command):
         # ===========================
 
         if key.startswith("CreateChannel"):
-            await create_channel(message.guild, message, data)
+            await create_channel(
+                message.guild,
+                message,
+                data
+            )
 
         elif key.startswith("CreateCategory"):
-            await create_category(message.guild, message, data)
+            await create_category(
+                message.guild,
+                message,
+                data
+            )
 
         elif key.startswith("CreateRole"):
-            await create_role(message.guild, message, data)
+            await create_role(
+                message.guild,
+                message,
+                data
+            )
 
         # ===========================
         # Delete
         # ===========================
 
         elif key.startswith("DeleteChannel"):
-            await delete_channel(message.guild, message, data)
+            await delete_channel(
+                message.guild,
+                message,
+                data
+            )
 
         elif key.startswith("DeleteCategory"):
-            await delete_category(message.guild, message, data)
+            await delete_category(
+                message.guild,
+                message,
+                data
+            )
 
         elif key.startswith("DeleteRole"):
-            await delete_role(message.guild, message, data)
+            await delete_role(
+                message.guild,
+                message,
+                data
+            )
 
         # ===========================
         # Roles
         # ===========================
 
         elif key.startswith("GrantRole"):
-            await grant_role(message.guild, message, data)
+            await grant_role(
+                message.guild,
+                message,
+                data
+            )
 
         elif key.startswith("RemoveRole"):
-            await remove_role(message.guild, message, data)
+            await remove_role(
+                message.guild,
+                message,
+                data
+            )
+
+        # ===========================
+        # Members
+        # ===========================
+
+        elif key.startswith("BanMember"):
+            await ban_member(
+                message.guild,
+                message,
+                data
+            )
+
+        elif key.startswith("KickMember"):
+            await kick_member(
+                message.guild,
+                message,
+                data
+            )
+
+        elif key.startswith("TimeoutMember"):
+            await timeout_member(
+                message.guild,
+                message,
+                data
+            )
 
         # ===========================
         # Unknown
@@ -57,5 +118,5 @@ async def execute_command(bot, message, command):
         else:
 
             await message.reply(
-                f"❌ الأمر `{key}` غير مدعوم حالياً."
+                f"❌ الأمر **{key}** غير مدعوم حالياً."
             )
