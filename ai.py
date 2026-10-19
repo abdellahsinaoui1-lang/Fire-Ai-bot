@@ -12,7 +12,7 @@ client = Groq(api_key=GROQ_KEY)
 # Model
 # ===========================
 
-MODEL = "llama-3.3-70b-versatile"
+MODEL = "openai/gpt-oss-120b"
 
 # ===========================
 # System Prompt
@@ -61,7 +61,7 @@ def chat(prompt: str, guild):
             }
         ],
         temperature=0.7,
-        max_tokens=700
+        max_tokens=2700
     )
 
     return response.choices[0].message.content
